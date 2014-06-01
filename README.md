@@ -53,7 +53,7 @@ Suppose you are in the top directory of this gem,
 The wordcount example is a famous Hadoop example.
 As it is explained at [http://www.cloudera.com/content/cloudera-content/cloudera-docs/HadoopTutorial/CDH4/Hadoop-Tutorial/ht_usage.html](http://www.cloudera.com/content/cloudera-content/cloudera-docs/HadoopTutorial/CDH4/Hadoop-Tutorial/ht_usage.html), create two input files.
 
-`bin/mapleroad samples/wordcount/mapper.rb samples/wordcount/reducer.rb wordcount/input wordcount/output Text:Int
+`bin/mapleroad samples/wordcount/mapper.rb samples/wordcount/reducer.rb wordcount/input wordcount/output Text:Int`
 
 
 ## Contributing
