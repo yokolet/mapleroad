@@ -1,0 +1,11 @@
+.classpath
+.project
+.settings
+.idea
+.rspec
+.ruby-version
+.ruby-gemset
+*~
+lib/.idea
+build
+tmp

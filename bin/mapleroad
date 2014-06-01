@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+require 'lock_jar'
+require 'optparse'
+require 'jruby-jars'
+
+opts = OptionParser.new do |opts|
+  opts.banner = "MapleRoad: proof of concept, hadoop by Ruby"
+  opts.define_head "Usage: mapleroad <mapper filename> <reducer filename> <input> <output> <type>"
+  opts.separator ""
+  opts.separator "Example:"
+  opts.separator "  mapleroad samples/anagram/mapper.rb samples/anagram/reducer.rb anagram/input anagram/output Text:Text"
+  # TODO: options
+end
+opts.parse!
+
+MAPPER_FILENAME = File.expand_path(ARGV.shift)
+REDUCER_FILENAME = File.expand_path(ARGV.shift)
+INPUT = ARGV.shift
+OUTPUT = ARGV.shift
+TYPE = ARGV.shift
+TYPE ||= "Text:Text"
+
+LockJar.lock
+locked_jars = LockJar.load
+classpath = locked_jars.map {|x| File.expand_path(x)}.join(":")
+libjarpath = locked_jars.map {|x| File.expand_path(x)}.join(",")
+
+JAVA_CLASS = 'mapleroad.MapleRoadJob'
+command = %Q(export HADOOP_CLASSPATH=#{classpath}; hadoop jar lib/mapleroad_service.jar #{JAVA_CLASS} #{MAPPER_FILENAME} #{REDUCER_FILENAME} #{INPUT} #{OUTPUT} #{TYPE})
+puts "COMMAND: #{command}"
+
+
+exec(command)
